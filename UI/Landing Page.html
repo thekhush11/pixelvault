@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Vault</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', monospace;
+            background: linear-gradient(135deg, #150E35 0%, #08162E 100%);
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 min(5vw, 40px);
+            width: 100%;
+        }
+
+        /* Header */
+        .header {
+            padding: 30px 0;
+            position: relative;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #A259FF, #F538FF);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .logo::before {
+            content: '';
+            width: 30px;
+            height: 30px;
+            border: 3px solid white;
+            border-radius: 8px;
+            transform: rotate(45deg);
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #fff;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(20px, 4vw, 32px);
+            font-weight: 400;
+            letter-spacing: clamp(2px, 0.5vw, 8px);
+            margin-bottom: 10px;
+            color: #B0A4D8;
+        }
+
+        .hero-content h2 {
+            font-size: clamp(32px, 7vw, 60px);
+            font-weight: 900;
+            letter-spacing: clamp(2px, 0.4vw, 5px);
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, #00E0FF, #A259FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: clamp(16px, 2vw, 18px);
+            line-height: 1.8;
+            margin-bottom: 50px;
+            color: #E0E6ED;
+            font-weight: 400;
+            max-width: 600px;
+        }
+
+        .get-started-btn {
+            padding: 18px 40px;
+            background: linear-gradient(45deg, #A259FF, #F538FF);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-family: 'Orbitron', monospace;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .get-started-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(162, 89, 255, 0.4);
+        }
+
+        /* Hero Illustration */
+        .hero-illustration {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .blockchain-visual {
+            position: relative;
+            width: 400px;
+            height: 300px;
+        }
+
+        .ethereum-symbol {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 120px;
+            background: linear-gradient(45deg, #00E0FF, #A259FF);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            z-index: 3;
+        }
+
+        .ethereum-symbol::before {
+            content: '';
+            position: absolute;
+            top: 60%;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(45deg, #A259FF, #F538FF);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
+        .cube {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #A259FF, #8B5CF6);
+            border-radius: 15px;
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .cube-1 {
+            top: 20px;
+            left: 20px;
+            animation-delay: 0s;
+        }
+
+        .cube-2 {
+            top: 40px;
+            right: 30px;
+            animation-delay: 2s;
+        }
+
+        .cube-3 {
+            bottom: 60px;
+            left: 40px;
+            animation-delay: 4s;
+        }
+
+        .cube-4 {
+            bottom: 20px;
+            right: 20px;
+            animation-delay: 1s;
+        }
+
+        .diamond {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #00E0FF, #4FC3F7);
+            transform: rotate(45deg);
+            border-radius: 8px;
+        }
+
+        .diamond-1 {
+            top: 10px;
+            right: 100px;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .diamond-2 {
+            bottom: 100px;
+            left: 10px;
+            animation: pulse 4s ease-in-out infinite 2s;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: clamp(24px, 4vw, 36px);
+            font-weight: 700;
+            letter-spacing: clamp(2px, 0.5vw, 6px);
+            margin-bottom: 80px;
+            color: #E0E6ED;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .step-number {
+            font-size: 48px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #A259FF, #F538FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .step-title {
+            font-size: clamp(18px, 2.5vw, 22px);
+            font-weight: 700;
+            color: #A259FF;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .step-description {
+            font-size: clamp(14px, 1.8vw, 16px);
+            line-height: 1.6;
+            color: #B8BCC8;
+            font-weight: 400;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: rotate(45deg) scale(1);
+            }
+            50% {
+                opacity: 0.7;
+                transform: rotate(45deg) scale(1.2);
+            }
+        }
+
+        /* Flexible blockchain elements for all screens */
+        .cube {
+            position: absolute;
+            width: clamp(60px, 8vw, 80px);
+            height: clamp(60px, 8vw, 80px);
+            background: linear-gradient(45deg, #A259FF, #8B5CF6);
+            border-radius: 15px;
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .diamond {
+            position: absolute;
+            width: clamp(30px, 4vw, 40px);
+            height: clamp(30px, 4vw, 40px);
+            background: linear-gradient(45deg, #00E0FF, #4FC3F7);
+            transform: rotate(45deg);
+            border-radius: 8px;
+        }
+
+        /* Prevent horizontal scrolling */
+        body {
+            font-family: 'Orbitron', monospace;
+            background: linear-gradient(135deg, #150E35 0%, #08162E 100%);
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        /* Ultra-wide screens (1600px+) */
+        @media (min-width: 1600px) {
+            .container {
+                max-width: 1600px;
+                padding: 0 60px;
+            }
+            
+            .hero {
+                padding: 120px 0;
+                gap: 80px;
+            }
+            
+            .how-it-works {
+                padding: 120px 0;
+            }
+        }
+
+        /* Large Desktop (1200px - 1599px) */
+        @media (min-width: 1200px) and (max-width: 1599px) {
+            .hero {
+                gap: 60px;
+            }
+            
+            .blockchain-visual {
+                width: 450px;
+                height: 350px;
+            }
+        }
+
+        /* Standard Desktop (992px - 1199px) */
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .hero {
+                gap: 50px;
+            }
+            
+            .blockchain-visual {
+                width: 380px;
+                height: 290px;
+            }
+            
+            .steps-container {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 35px;
+            }
+        }
+
+        /* Tablet Landscape (768px - 991px) */
+        @media (min-width: 768px) and (max-width: 991px) {
+            .hero {
+                grid-template-columns: 1fr 0.8fr;
+                gap: 40px;
+                padding: 60px 0;
+            }
+            
+            .blockchain-visual {
+                width: 320px;
+                height: 240px;
+            }
+            
+            .steps-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+            
+            .how-it-works {
+                padding: 80px 0;
+            }
+        }
+
+        /* Tablet Portrait (576px - 767px) */
+        @media (min-width: 576px) and (max-width: 767px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 40px;
+                padding: 50px 0;
+            }
+            
+            .blockchain-visual {
+                width: 280px;
+                height: 220px;
+            }
+            
+            .steps-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+            }
+            
+            .step {
+                padding: 25px 15px;
+            }
+            
+            .get-started-btn {
+                padding: 16px 35px;
+                font-size: 15px;
+            }
+        }
+
+        /* Mobile Landscape (480px - 575px) */
+        @media (min-width: 480px) and (max-width: 575px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 35px;
+                padding: 40px 0;
+            }
+            
+            .blockchain-visual {
+                width: 250px;
+                height: 190px;
+            }
+            
+            .steps-container {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .step {
+                padding: 25px 20px;
+            }
+            
+            .step-number {
+                font-size: 40px;
+            }
+            
+            .header {
+                padding: 20px 0;
+            }
+            
+            .how-it-works {
+                padding: 60px 0;
+            }
+        }
+
+        /* Mobile Portrait (up to 479px) */
+        @media (max-width: 479px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 30px;
+                padding: 30px 0;
+            }
+            
+            .blockchain-visual {
+                width: 220px;
+                height: 170px;
+            }
+            
+            .ethereum-symbol {
+                width: 80px;
+                height: 100px;
+            }
+            
+            .steps-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .step {
+                padding: 20px 15px;
+            }
+            
+            .step-number {
+                font-size: 36px;
+            }
+            
+            .get-started-btn {
+                padding: 14px 28px;
+                font-size: 14px;
+                letter-spacing: 1px;
+            }
+            
+            .logo {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .logo-text {
+                font-size: 20px;
+                letter-spacing: 2px;
+            }
+            
+            .header {
+                padding: 15px 0;
+            }
+            
+            .how-it-works {
+                padding: 50px 0;
+            }
+        }
+
+        /* Extra Small Devices (320px - 374px) */
+        @media (max-width: 374px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .blockchain-visual {
+                width: 200px;
+                height: 150px;
+            }
+            
+            .hero-description {
+                font-size: 15px;
+                line-height: 1.6;
+            }
+            
+            .step {
+                padding: 18px 12px;
+            }
+            
+            .get-started-btn {
+                padding: 12px 24px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo"></div>
+                <span class="logo-text">PIXEL VAULT</span>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>WELCOME TO</h1>
+                <h2>PIXEL VAULT</h2>
+                <p class="hero-description">
+                    Take back control of your digital photos. 
+                    Pixel Vault stores your memories securely using 
+                    blockchain and IPFS—no middlemen, no compromise.
+                </p>
+                <a href="Upload Page.html"><button type="button" class="get-started-btn">GET STARTED</button></a>
+            </div>
+            <div class="blockchain-visual">
+                    <div class="ethereum-symbol"></div>
+                    <div class="cube cube-1"></div>
+                    <div class="cube cube-2"></div>
+                    <div class="cube cube-3"></div>
+                    <div class="cube cube-4"></div>
+                    <div class="diamond diamond-1"></div>
+                    <div class="diamond diamond-2"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works">
+            <h2 class="section-title">HOW IT WORKS</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1.</div>
+                    <h3 class="step-title">Connect Your Wallet:</h3>
+                    <p class="step-description">
+                        Once the page loads, your wallet will automatically 
+                        connect. You'll see your Ethereum address under the 
+                        title "Account".
+                    </p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2.</div>
+                    <h3 class="step-title">Connect an Image:</h3>
+                    <p class="step-description">
+                        Click the "Choose Image" button to select the photo 
+                        you want to upload from your device.
+                    </p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3.</div>
+                    <h3 class="step-title">Upload to IPFS:</h3>
+                    <p class="step-description">
+                        After selecting the image, hit "Upload file". Your photo 
+                        will be stored securely on the IPFS network and a unique 
+                        hash (CID) will be generated.
+                    </p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4.</div>
+                    <h3 class="step-title">Retrieve Photo by Address:</h3>
+                    <p class="step-description">
+                        To access stored photos, enter a valid Ethereum address 
+                        into the "Enter Address" box and click "Get data."
+                    </p>
+                </div>
+                <div class="step">
+                    <div class="step-number">5.</div>
+                    <h3 class="step-title">View the Stored Image:</h3>
+                    <p class="step-description">
+                        If that address has uploaded images, they will be 
+                        retrieved and displayed using the IPFS link associated 
+                        with them.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
